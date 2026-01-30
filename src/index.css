@@ -1,0 +1,864 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+For cursor usage
+*/
+
+/* Hide the default cursor for the entire app */
+html,
+body,
+.project-card,
+.custom-class {
+  cursor: none !important;
+}
+
+/* Ensure interactive elements still look clickable to the user */
+a,
+button,
+[role="button"] {
+  cursor: none !important;
+}
+
+/* IMPORTANT: Keep the text cursor for inputs so you can see where you're typing */
+input,
+textarea,
+select {
+  cursor: none !important;
+}
+
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-text-main font-body;
+  }
+}
+
+@layer components {
+  .section {
+    @apply py-8 px-4 sm:py-10 sm:px-6 md:py-12 md:px-20 lg:py-16;
+  }
+
+  .container {
+    @apply max-w-6xl mx-auto px-4 sm:px-6;
+  }
+
+  .btn-primary {
+    @apply bg-primary text-background px-6 py-3 rounded-lg font-medium transition-all duration-150 hover:scale-105 hover:shadow-lg hover:shadow-primary/30;
+  }
+
+  .btn-secondary {
+    @apply border border-primary text-primary px-6 py-3 rounded-lg font-medium transition-all duration-150 hover:bg-primary/10 hover:text-white;
+  }
+
+  .card {
+    @apply bg-surface border border-gray-800 rounded-2xl p-6 transition-all duration-200 hover:scale-105 hover:shadow-xl hover:border-primary;
+  }
+
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent;
+  }
+
+  .navbar {
+    @apply fixed top-0 left-0 w-full z-50;
+    transition: all 300ms cubic-bezier(0.16, 1, 0.3, 1);
+    height: 80px;
+    padding: 0 1.5rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .navbar--scrolled {
+    @apply top-2;
+    height: 64px;
+  }
+
+  .navbar-container {
+    @apply flex items-center justify-between h-full w-full max-w-7xl mx-auto px-8;
+    transition: all 400ms cubic-bezier(0.16, 1, 0.3, 1);
+    border-radius: 0px;
+    background: transparent;
+    border: 1px solid transparent;
+  }
+
+  .navbar--scrolled .navbar-container {
+    background: rgba(10, 10, 10, 0.6);
+    backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px -8px rgba(0, 0, 0, 0.4);
+    height: 60px;
+  }
+
+  @media (max-width: 768px) {
+    .navbar {
+      padding: 0 0.75rem;
+    }
+
+    .navbar-container {
+      @apply px-4;
+    }
+
+    .navbar--scrolled .navbar-container {
+      @apply rounded-xl;
+    }
+  }
+
+  .navbar-logo {
+    @apply font-heading font-black text-xl text-white tracking-widest transition-all duration-300 hover:text-primary;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+  }
+
+  .navbar-hamburger {
+    @apply md:hidden text-white/90 hover:text-primary transition-colors;
+  }
+
+  .navbar-menu {
+    @apply hidden md:flex items-center space-x-10;
+  }
+
+  .navbar-link {
+    @apply text-white/60 font-medium text-sm hover:text-white transition-all duration-200 relative py-2 uppercase tracking-widest;
+  }
+
+  .navbar-link::after {
+    content: '';
+    @apply absolute -bottom-1 left-1/2 -translate-x-1/2 w-0 h-1 bg-primary rounded-full transition-all duration-300 opacity-0;
+  }
+
+  .navbar-link:hover::after {
+    @apply w-1.5 h-1.5 opacity-100;
+    box-shadow: 0 0 15px rgba(34, 197, 94, 0.8);
+  }
+
+  .navbar-cv-btn {
+    @apply bg-white/10 hover:bg-white text-white hover:text-black px-6 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center gap-2 transition-all duration-300 border border-white/10;
+  }
+
+  .mobile-menu {
+    @apply fixed top-0 left-0 w-full h-full bg-black/95 backdrop-blur-2xl transform -translate-y-full transition-transform duration-300 md:hidden z-40;
+  }
+
+  .mobile-menu--open {
+    @apply translate-y-0;
+  }
+
+  .mobile-menu-content {
+    @apply flex flex-col items-center justify-center h-full space-y-8;
+  }
+
+  .mobile-menu-link {
+    @apply text-2xl font-heading text-text-muted hover:text-primary transition-colors duration-150;
+  }
+
+  .mobile-menu-cv-btn {
+    @apply btn-primary flex items-center gap-2 text-lg;
+  }
+
+  .hero {
+    @apply relative min-h-screen flex items-center justify-center overflow-hidden;
+  }
+
+  .hero-background {
+    @apply absolute inset-0;
+  }
+
+  .hero-gradient {
+    @apply absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-secondary/20;
+  }
+
+  .hero-particles {
+    @apply absolute inset-0;
+  }
+
+  .particle {
+    @apply absolute w-2 h-2 bg-primary/30 rounded-full;
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .particle:nth-child(1) {
+    top: 20%;
+    left: 10%;
+    animation-delay: 0s;
+  }
+
+  .particle:nth-child(2) {
+    top: 60%;
+    left: 80%;
+    animation-delay: 2s;
+  }
+
+  .particle:nth-child(3) {
+    top: 80%;
+    left: 20%;
+    animation-delay: 4s;
+  }
+
+  .particle:nth-child(4) {
+    top: 40%;
+    left: 70%;
+    animation-delay: 1s;
+  }
+
+  .particle:nth-child(5) {
+    top: 10%;
+    left: 60%;
+    animation-delay: 3s;
+  }
+
+  .hero {
+    @apply relative min-h-screen flex items-center pt-20 pb-8 md:pt-0 md:pb-0 overflow-hidden;
+  }
+
+  .hero-container {
+    @apply container relative z-10 px-4 md:px-6 mx-auto;
+  }
+
+  .hero-content {
+    @apply grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center;
+  }
+
+  .hero-text {
+    @apply space-y-4 md:space-y-6 text-center lg:text-left order-2 lg:order-1;
+  }
+
+  .hero-label {
+    @apply text-secondary font-semibold text-sm md:text-lg tracking-widest uppercase;
+  }
+
+  .hero-name {
+    @apply font-heading font-black text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white leading-tight;
+  }
+
+  .hero-subtitle {
+    @apply text-xl md:text-2xl lg:text-3xl font-heading font-bold h-12 md:h-16 lg:h-20 flex items-center justify-center lg:justify-start overflow-hidden;
+  }
+
+  .hero-intro {
+    @apply text-text-muted text-base md:text-lg leading-relaxed max-w-2xl mx-auto lg:mx-0;
+  }
+
+  .hero-buttons {
+    @apply flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4;
+  }
+
+  .hero-image {
+    @apply relative flex justify-center order-1 lg:order-2 mb-8 lg:mb-0;
+  }
+
+  .hero-image-glow {
+    @apply absolute inset-0 bg-gradient-to-r from-primary/30 to-secondary/30 rounded-full blur-3xl;
+  }
+
+  .hero-image-wrapper {
+    @apply relative w-48 h-48 sm:w-64 sm:h-64 md:w-72 md:h-72 lg:w-80 lg:h-80 rounded-full overflow-hidden border-4 border-primary/30;
+  }
+
+  .hero-profile-img {
+    @apply w-full h-full object-cover;
+  }
+
+  .perspect-1000 {
+    perspective: 1000px;
+  }
+
+  .hero-scroll-indicator {
+    @apply absolute bottom-8 left-1/2 transform -translate-x-1/2 text-primary animate-bounce;
+  }
+
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translateY(0px) translateX(0px);
+    }
+
+    25% {
+      transform: translateY(-20px) translateX(10px);
+    }
+
+    50% {
+      transform: translateY(10px) translateX(-10px);
+    }
+
+    75% {
+      transform: translateY(-10px) translateX(20px);
+    }
+  }
+
+  .animate-in {
+    animation: slideUp 0.6s ease-out forwards;
+  }
+
+  .section,
+  .project-card,
+  .timeline-item,
+  .skills-tool-card,
+  .skill-card {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  .section.animate-in,
+  .project-card.animate-in,
+  .timeline-item.animate-in,
+  .skills-tool-card.animate-in,
+  .skill-card.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .project-card,
+  .timeline-item,
+  .skills-tool-card,
+  .skill-card {
+    transition: all 0.6s ease-out;
+  }
+
+  .project-card:nth-child(1) {
+    transition-delay: 0.1s;
+  }
+
+  .project-card:nth-child(2) {
+    transition-delay: 0.2s;
+  }
+
+  .project-card:nth-child(3) {
+    transition-delay: 0.3s;
+  }
+
+  .project-card:nth-child(4) {
+    transition-delay: 0.4s;
+  }
+
+  .project-card:nth-child(5) {
+    transition-delay: 0.5s;
+  }
+
+  .project-card:nth-child(6) {
+    transition-delay: 0.6s;
+  }
+
+  .section-header {
+    @apply text-center mb-6 sm:mb-8 md:mb-12;
+  }
+
+  .section-label {
+    @apply text-secondary font-medium text-sm uppercase tracking-wider mb-4 inline-block;
+  }
+
+  .section-title {
+    @apply font-heading font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-white mb-4;
+  }
+
+  .section-subtitle {
+    @apply text-text-muted text-lg;
+  }
+
+  .about-content {
+    @apply grid md:grid-cols-[1.2fr_1fr] gap-8 items-start md:items-center;
+  }
+
+  .about-text {
+    @apply space-y-6;
+  }
+
+  .about-paragraph {
+    @apply text-text-muted leading-relaxed text-lg;
+  }
+
+  .about-card {
+    @apply relative bg-surface border border-gray-800 rounded-2xl p-8 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:border-primary;
+  }
+
+  .about-card-background {
+    @apply absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-2xl;
+  }
+
+  .about-card-content {
+    @apply relative z-10 space-y-6;
+  }
+
+  .about-card-image {
+    @apply w-32 h-32 rounded-full overflow-hidden mx-auto mb-6 border-4 border-primary/30;
+  }
+
+  .about-card-image img {
+    @apply w-full h-full object-cover;
+  }
+
+  .about-info-item {
+    @apply flex items-center gap-4;
+  }
+
+  .about-info-icon {
+    @apply text-primary flex-shrink-0;
+  }
+
+  .about-info-label {
+    @apply text-text-muted text-sm;
+  }
+
+  .about-info-value {
+    @apply text-text-main font-medium;
+  }
+
+  .about-stats {
+    @apply grid grid-cols-2 gap-6 pt-6 border-t border-gray-800;
+  }
+
+  .about-stat {
+    @apply text-center;
+  }
+
+  .about-stat-value {
+    @apply text-2xl font-bold text-primary;
+  }
+
+  .about-stat-label {
+    @apply text-text-muted text-sm;
+  }
+
+  .skills-grid {
+    @apply grid md:grid-cols-3 gap-6;
+  }
+
+  .skill-card {
+    @apply bg-surface border border-gray-800 rounded-2xl p-6 transition-all duration-200 hover:scale-105 hover:shadow-xl hover:border-primary;
+  }
+
+  .skill-card-header {
+    @apply flex items-center gap-4 mb-6;
+  }
+
+  .skill-card-icon {
+    @apply text-primary;
+  }
+
+  .skill-card-title {
+    @apply font-heading font-semibold text-xl text-white;
+  }
+
+  .skill-list {
+    @apply space-y-4;
+  }
+
+  .skill-item {
+    @apply space-y-2;
+  }
+
+  .skill-item-header {
+    @apply flex justify-between items-center;
+  }
+
+  .skill-name {
+    @apply text-text-main font-medium;
+  }
+
+  .skill-level {
+    @apply text-primary font-medium;
+  }
+
+  .skill-bar {
+    @apply w-full bg-gray-800 rounded-full h-2 overflow-hidden;
+  }
+
+  .skill-bar-fill {
+    @apply bg-gradient-to-r from-primary to-secondary h-full rounded-full transition-all duration-1000 ease-out;
+  }
+
+  .projects-filter {
+    @apply flex flex-wrap justify-center gap-4 mb-12;
+  }
+
+  .filter-btn {
+    @apply px-6 py-2 rounded-full border border-gray-700 text-text-muted transition-all duration-200 hover:border-primary hover:text-primary;
+  }
+
+  .filter-btn--active {
+    @apply bg-primary text-background border-primary;
+  }
+
+  .projects-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6;
+  }
+
+  .project-card {
+    @apply bg-surface border border-gray-800 rounded-2xl overflow-hidden transition-all duration-200 hover:scale-105 hover:shadow-xl hover:border-primary cursor-pointer;
+  }
+
+  .project-image {
+    @apply relative h-48 overflow-hidden;
+  }
+
+  .project-image img {
+    @apply w-full h-full object-cover;
+  }
+
+  .project-overlay {
+    @apply absolute inset-0 bg-black/70 flex items-center justify-center opacity-0 transition-opacity duration-300;
+  }
+
+  .project-card:hover .project-overlay {
+    @apply opacity-100;
+  }
+
+  .project-overlay span {
+    @apply text-white font-medium;
+  }
+
+  .project-content {
+    @apply p-6 space-y-4;
+  }
+
+  .project-title {
+    @apply font-heading font-semibold text-xl text-white;
+  }
+
+  .project-description {
+    @apply text-text-muted text-sm leading-relaxed;
+  }
+
+  .project-tech {
+    @apply flex flex-wrap gap-2;
+  }
+
+  .tech-pill {
+    @apply px-3 py-1 bg-primary/20 text-primary text-xs rounded-full border border-primary/30;
+  }
+
+  .project-links {
+    @apply flex gap-4;
+  }
+
+  .project-link {
+    @apply flex items-center gap-2 text-text-muted hover:text-primary transition-colors duration-200;
+  }
+
+  .project-modal {
+    @apply fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4;
+  }
+
+  .project-modal-content {
+    @apply bg-surface border border-gray-800 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto;
+  }
+
+  .project-modal-close {
+    @apply absolute top-4 right-4 text-text-muted hover:text-white text-2xl w-8 h-8 flex items-center justify-center;
+  }
+
+  .project-modal-image {
+    @apply relative h-64 overflow-hidden;
+  }
+
+  .project-modal-image img {
+    @apply w-full h-full object-cover;
+  }
+
+  .project-modal-body {
+    @apply p-6 space-y-6;
+  }
+
+  .project-modal-title {
+    @apply font-heading font-bold text-2xl text-white;
+  }
+
+  .project-modal-description {
+    @apply text-text-muted leading-relaxed;
+  }
+
+  .project-modal-section h4 {
+    @apply font-heading font-semibold text-white mb-3;
+  }
+
+  .project-modal-links {
+    @apply flex gap-4;
+  }
+
+  .timeline {
+    @apply relative max-w-4xl mx-auto px-4 sm:px-6;
+  }
+
+  .timeline-line {
+    @apply absolute left-6 top-0 bottom-0 w-0.5 bg-primary/30;
+  }
+
+  @media (min-width: 768px) {
+    .timeline-line {
+      @apply left-1/2 transform -translate-x-1/2;
+    }
+  }
+
+  .timeline-item {
+    @apply relative flex items-center mb-6 justify-start pl-12;
+  }
+
+  @media (min-width: 768px) {
+    .timeline-item {
+      @apply pl-0 mb-8;
+    }
+
+    .timeline-item--left {
+      @apply justify-start;
+    }
+
+    .timeline-item--right {
+      @apply justify-end;
+    }
+  }
+
+  .timeline-content {
+    @apply bg-surface border border-gray-800 rounded-2xl p-4 sm:p-6 w-full transition-all duration-200 hover:scale-105 hover:shadow-xl hover:border-primary;
+  }
+
+  @media (min-width: 768px) {
+    .timeline-content {
+      @apply w-5/12 p-6;
+    }
+
+    .timeline-item--left .timeline-content {
+      @apply mr-auto;
+    }
+
+    .timeline-item--right .timeline-content {
+      @apply ml-auto;
+    }
+  }
+
+  .timeline-icon {
+    @apply absolute top-6 text-primary bg-surface p-2 rounded-full border-2 border-primary left-4 w-10 h-10 flex items-center justify-center;
+  }
+
+  @media (min-width: 768px) {
+    .timeline-icon {
+      @apply left-auto w-auto h-auto p-2;
+    }
+
+    .timeline-item--left .timeline-icon {
+      @apply -right-6 left-auto;
+    }
+
+    .timeline-item--right .timeline-icon {
+      @apply -left-6;
+    }
+  }
+
+  .timeline-year {
+    @apply text-secondary font-medium text-sm mb-2;
+  }
+
+  .timeline-title {
+    @apply font-heading font-semibold text-lg sm:text-xl text-white mb-2;
+  }
+
+  .timeline-organization {
+    @apply text-primary font-medium mb-3;
+  }
+
+  .timeline-description {
+    @apply text-text-muted text-sm leading-relaxed;
+  }
+
+  .timeline-node {
+    @apply absolute left-6 top-8 w-3 h-3 sm:w-4 sm:h-4 bg-primary rounded-full border-4 border-background transform -translate-x-1/2;
+  }
+
+  @media (min-width: 768px) {
+    .timeline-node {
+      @apply left-1/2 w-4 h-4;
+    }
+  }
+
+  .section--alt {
+    @apply bg-surface/50;
+  }
+
+  .skills-tools-grid {
+    @apply grid md:grid-cols-3 gap-8;
+  }
+
+  .skills-tool-card {
+    @apply bg-surface border border-gray-800 rounded-2xl p-6 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:border-primary;
+  }
+
+  .skills-tool-header {
+    @apply flex items-center gap-4 mb-4;
+  }
+
+  .skills-tool-icon {
+    @apply text-primary;
+  }
+
+  .skills-tool-title {
+    @apply font-heading font-semibold text-xl text-white;
+  }
+
+  .skills-tool-description {
+    @apply text-text-muted leading-relaxed mb-6;
+  }
+
+  .skills-tool-points {
+    @apply mb-6;
+  }
+
+  .skills-tool-points-title {
+    @apply font-heading font-medium text-white mb-3;
+  }
+
+  .skills-tool-list {
+    @apply space-y-2;
+  }
+
+  .skills-tool-list-item {
+    @apply text-text-muted text-sm pl-4 relative;
+  }
+
+  .skills-tool-list-item::before {
+    content: '•';
+    @apply absolute left-0 text-primary;
+  }
+
+  .skills-tool-footer {
+    @apply pt-4 border-t border-gray-800;
+  }
+
+  .skills-tool-level {
+    @apply text-primary font-medium text-sm;
+  }
+
+  .contact-grid,
+  .contact-content {
+    @apply grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 max-w-5xl mx-auto;
+  }
+
+  .contact-card {
+    @apply bg-surface border border-gray-800 rounded-2xl p-6 md:p-8 transition-all duration-200 hover:shadow-xl hover:border-primary;
+  }
+
+  .contact-card-header {
+    @apply space-y-3 mb-6;
+  }
+
+  .contact-card-title {
+    @apply font-heading font-bold text-2xl text-white;
+  }
+
+  .contact-card-text {
+    @apply text-text-muted leading-relaxed;
+  }
+
+  .contact-links {
+    @apply space-y-3;
+  }
+
+  .contact-link {
+    @apply flex items-center justify-between gap-4 rounded-xl border border-gray-800 bg-black/10 px-4 py-3 transition-all duration-300 hover:border-primary hover:bg-primary/10;
+  }
+
+  .contact-link-left {
+    @apply flex items-center gap-3 min-w-0;
+  }
+
+  .contact-link-icon {
+    @apply text-primary flex-shrink-0;
+  }
+
+  .contact-link-text {
+    @apply text-text-main truncate;
+  }
+
+  .contact-link-right {
+    @apply text-text-muted text-xs uppercase tracking-widest flex-shrink-0;
+  }
+
+  .contact-form-row {
+    @apply grid md:grid-cols-2 gap-6;
+  }
+
+  .contact-form {
+    @apply space-y-6;
+  }
+
+  .form-group {
+    @apply space-y-2;
+  }
+
+  .form-label {
+    @apply block text-text-main font-medium mb-2;
+  }
+
+  .form-input,
+  .form-textarea {
+    @apply w-full bg-surface border border-gray-800 rounded-lg px-4 py-3 text-text-main placeholder-text-muted focus:outline-none focus:border-primary transition-colors duration-200;
+  }
+
+  .form-input--error {
+    @apply border-error;
+  }
+
+  .form-textarea {
+    @apply resize-none;
+  }
+
+  .form-error {
+    @apply text-error text-sm;
+  }
+
+  .submit-message {
+    @apply p-3 rounded-lg text-sm font-medium;
+  }
+
+  .submit-message--success {
+    @apply bg-primary/20 text-primary border border-primary/30;
+  }
+
+  .submit-message--error {
+    @apply bg-error/20 text-error border border-error/30;
+  }
+
+  .btn-submit {
+    @apply w-full flex items-center justify-center gap-2;
+  }
+
+  .footer {
+    @apply bg-surface border-t border-gray-800 py-8;
+  }
+
+  .footer-container {
+    @apply container flex flex-col md:flex-row items-center justify-between gap-6;
+  }
+
+  .footer-section {
+    @apply flex items-center gap-6;
+  }
+
+  .footer-copyright {
+    @apply text-text-muted text-sm;
+  }
+
+  .footer-links {
+    @apply gap-6;
+  }
+
+  .footer-link {
+    @apply text-text-muted hover:text-primary transition-colors duration-200;
+  }
+
+  .footer-social {
+    @apply gap-4;
+  }
+
+  .footer-social-icon {
+    @apply text-text-muted hover:text-primary transition-colors duration-200;
+  }
+
+  .back-to-top {
+    @apply fixed bottom-8 right-8 bg-primary text-background p-3 rounded-full shadow-lg hover:scale-110 transition-transform duration-200 z-40;
+  }
+}
